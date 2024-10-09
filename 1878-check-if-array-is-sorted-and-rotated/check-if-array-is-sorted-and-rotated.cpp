@@ -7,31 +7,16 @@ public:
         // 1 2 2
         // 2 1 2
         
-        vector<int> fir,sec;
-        sec.push_back(nums[0]);
-        int f = 0;
         int n = nums.size();
-        for(int i = 1;i<n;i++){
-            if(nums[i - 1] > nums[i]){
-                f = 1;
-            }
+        int coun = 0;
+        for (int i = 1;i<n;i++){
+            if(nums[i - 1] > nums[i])coun++;
 
-            if(f == 1){
-                fir.push_back(nums[i]);
-            }
-            else {
-                sec.push_back(nums[i]);
-            }
+           
+
         }
+         if(nums[n-1] >nums[0]) coun++;
+                    return coun <= 1;
 
-        for(auto it : sec){
-            fir.push_back(it);
-        }
-
-        for(int i = 1;i<n;i++){
-            if(fir[i - 1] > fir[i]) return false;
-        }
-
-        return true;
     }
 };
