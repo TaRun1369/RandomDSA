@@ -1,23 +1,16 @@
 class Solution {
 public:
-    int recur(int stock,vector<int> &prices,int ind,vector<vector<int>> &dp){
-        if(ind >= prices.size()) return 0;
-        int ans = 0;
-        if(dp[ind][stock] != -1) return dp[ind][stock];
-        if(stock == 0){
-            ans = max(ans,recur(1,prices,ind+1,dp) - prices[ind]);
-            ans = max(ans,recur(0,prices,ind + 1,dp));
-        }
-        else{
-            ans = max(ans,recur(0,prices,ind + 1,dp) + prices[ind]);
-            ans = max(ans,recur(1,prices,ind+1,dp));
-
-        }
-        return dp[ind][stock] = ans;
-    }
+    
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        vector<vector<int>> dp(n+1,vector<int>(2,-1) );
-        return recur(0,prices,0,dp);
+        vector<vector<int>> dp(n+1,vector<int>(2,0) );
+        // return recur(0,prices,0,dp);
+        dp[0][0] = 0,dp[0][1] = -(prices[0]);
+        for(int i = 1;i<n;i++){
+            dp[i][0] = max(dp[i - 1][0],dp[i - 1][1] + prices[i]);
+            dp[i][1] = max(dp[i - 1][1],dp[i -1][0] - prices[i]);
+
+        }
+        return max(dp[n-1][0],dp[n-1][1]);
     }
 };
