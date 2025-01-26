@@ -22,38 +22,33 @@
 //     }
 // };
 class Solution {
+    int solve(int index,int buy,int cnt,int n,vector<int> &prices,vector<vector<vector<int>>> &dp){
+        if(index==n){
+            return 0;
+        }
+        if(cnt==0){
+            return 0;
+        }
+        if(dp[index][buy][cnt]!=-1){
+            return dp[index][buy][cnt];
+        }
+        int profit=0;
+        if(buy){
+            int pick=-prices[index]+solve(index+1,false,cnt,n,prices,dp);
+            int notPick=0+solve(index+1,true,cnt,n,prices,dp);
+            profit=max(pick,notPick);
+        }
+        else{
+            int pick=prices[index]+solve(index+1,true,cnt-1,n,prices,dp);
+            int notPick=solve(index+1,false,cnt,n,prices,dp);
+            profit=max(pick,notPick);
+        }
+        return dp[index][buy][cnt]=profit;
+    }
 public:
     int maxProfit(vector<int>& prices) {
         int n=prices.size();
-        vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(3,0)));
-        for(int i=0;i<n;i++){
-            for(int j=0;j<2;j++){
-                dp[i][j][0]=0;
-            }
-        }
-        for(int j=0;j<2;j++){
-            for(int k=0;k<3;k++){
-                dp[0][j][k]=0;
-            }
-        }
-        for(int i=n-1;i>=0;i--){
-            for(int j=0;j<2;j++){
-                for(int k=1;k<3;k++){
-                    int profit=0;
-                    if(j){
-                        int pick=-prices[i]+dp[i+1][false][k];
-                        int notPick=0+dp[i+1][true][k];
-                        profit=max(pick,notPick);
-                    }
-                    else{
-                        int pick=prices[i]+dp[i+1][true][k-1];
-                        int notPick=dp[i+1][false][k];
-                        profit=max(pick,notPick);
-                    }
-                    dp[i][j][k]=profit;
-                }
-            }
-        }
-        return dp[0][true][2];
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(3,-1)));
+        return solve(0,true,2,n,prices,dp);
     }
 };
