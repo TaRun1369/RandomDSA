@@ -1,31 +1,3 @@
-// class Solution {
-// public:
-//     vector<int> ans;
-//     int nn;
-//     void recur(int ind){
-//         if(ind == 2*nn - 1) return;
-
-//         for(int i = 1;i<=nn;i++){
-//             if(ind - i >= 0 && ans[ind - i] == i){
-//                 ans[ind] = i;
-//                 recur(ind + 1);
-//                 ans[ind] = 0;
-//             }
-//             else{
-//                 ans[ind] = i;
-//                 recur(ind + 1);
-//                 ans[ind] = 0;
-//             }
-//         }
-//     }
-//     vector<int> constructDistancedSequence(int n) {
-//         ans.resize(2*n - 1);
-//         int nn = n;
-//         recur(0);
-//         return ans;
-//     }
-// };
-
 class Solution {
 public:
     vector<int> ans;
