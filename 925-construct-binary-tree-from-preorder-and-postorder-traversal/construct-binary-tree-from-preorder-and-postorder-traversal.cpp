@@ -11,6 +11,7 @@
  */
 class Solution {
 public:
+    unordered_map<int,int> mp;
     TreeNode* recur(int preSt,int preEn,int postSt,vector<int>& pre, vector<int>& post){
         if(preSt > preEn) return NULL;
 
@@ -18,9 +19,10 @@ public:
         if(preSt == preEn) return root;
         int nextNode = pre[preSt + 1];
         int j = postSt;
-        while(post[j] != nextNode){
-            j++;
-        }
+        // while(post[j] != nextNode){
+        //     j++;
+        // }
+        j = mp[nextNode];
         int num = j - postSt + 1;
 
         root->left = recur(preSt + 1,preSt + num,postSt,pre,post);
@@ -32,6 +34,7 @@ public:
         // PRE - ROOT LEFT RIGHT
         // POST - LEFT RIGHT ROOT
         int n = pre.size();
+        for(int i = 0;i<post.size();i++) mp[post[i]] = i;
         return recur(0,n-1,0,pre,post);
     }
 };
