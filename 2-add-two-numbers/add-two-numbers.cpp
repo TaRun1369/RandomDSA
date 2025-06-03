@@ -10,65 +10,66 @@
  */
 class Solution {
 public:
-    ListNode* reverse(ListNode* head) {
-        ListNode* dummy = NULL, *temp = head,*nex;
 
-        while(temp != NULL){
-            nex = temp->next;
-            temp->next = dummy;
-            dummy = temp;
-            temp = nex;
+    // 2-4-3
+    // dum - null node pe
+    // curr - 2
+    // nex - 2->next
+    ListNode* reverse(ListNode* node){
+        ListNode* dum = NULL;
+
+        ListNode* curr = node;
+
+        while(curr != NULL){
+            ListNode* nex = curr->next;
+            curr->next = dum;
+            dum = curr;
+            curr = nex;
         }
-        return dummy;
+        return dum;
+
     }
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        if(l1 == NULL) return (l2);
-        if(l2 == NULL) return (l1);
-        int sum = 0,carry = 0;
-        ListNode* ans = NULL,*temp = NULL;
-        while(l1 != NULL && l2 != NULL){
-            sum = l1->val + l2->val + carry;
-            carry = sum / 10;
-            ListNode* nn = new ListNode(sum % 10);
-            if(ans == NULL){
-                ans = nn;
-                temp = ans;
-            }
-            else{
-                temp->next = nn;
-                temp = temp->next;
-            }
-            l1 = l1->next;
-            l2 = l2->next;
+        // l1 = reverse(l1);
+        // l2 = reverse(l2);
+
+        // ListNode* temp = l1;
+        // while(temp != NULL){
+        //     cout<<temp->val;
+        //     temp = temp->next;
+        // }
+        // return l2;
+
+        ListNode* temp1 = l1,*temp2 = l2,*temp;
+        ListNode* nn = new ListNode(0);
+        temp = nn;
+        int carry = 0;
+        while(temp1 != NULL && temp2 != NULL){
+            int sum = temp1->val + temp2->val + carry;
+            carry = sum /10;
+            temp->next = new ListNode(sum%10);
+            temp = temp->next;
+            temp1 = temp1->next;
+            temp2 = temp2->next;
         }
 
-        if(l1 != NULL){
-            while(carry != 0 && l1 != NULL ){
-                    sum = l1->val  + carry;
-                    carry = sum / 10;
-                    ListNode* nn = new ListNode(sum % 10);
-                    temp->next = nn;
-                    temp = temp->next;
-                    l1 = l1->next;
-            } 
-            if(l1 != NULL) temp->next = l1;
+        while(temp1 != NULL){
+            int sum = temp1->val + carry;
+            carry = sum /10;
+            temp->next = new ListNode(sum%10);
+            temp = temp->next;
+            temp1 = temp1->next;
         }
+        while(temp2 != NULL){
+            int sum = temp2->val + carry;
+            carry = sum /10;
+            temp->next = new ListNode(sum%10);
+            temp = temp->next;
+            temp2 = temp2->next;
+        }
+        if(carry != 0) temp->next = new ListNode(carry);
+        
 
-        if(l2 != NULL){
-            while(carry != 0 && l2 != NULL ){
-                    sum = l2->val  + carry;
-                    carry = sum / 10;
-                    ListNode* nn = new ListNode(sum % 10);
-                    temp->next = nn;
-                    temp = temp->next;
-                    l2 = l2->next;
-            }
-            if(l2 != NULL) temp ->next = l2;
-        } 
-        if(carry > 0){
-            ListNode* nn = new ListNode(carry);
-            temp->next = nn;
-        }
-        return (ans);
+        return nn->next;
     }
 };
