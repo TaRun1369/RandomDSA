@@ -15,7 +15,7 @@ public:
                 wc++;
                 cout<<i<<" ";
                 if(iscurr == true){
-                    cout<<"true"<<endl;
+                    // cout<<"true"<<endl;
                     ans++;
                 } 
                 iscurr = false;
@@ -35,7 +35,7 @@ public:
         }
         wc++;
         if(iscurr == true){
-                cout<<"true"<<endl;
+                // cout<<"true"<<endl;
                 ans++;
         } 
         return wc - ans;
